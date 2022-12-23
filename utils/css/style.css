@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;;
+    box-sizing: border-box;
+    background: #1A202C !important;
+}
+
+.card-header {
+    font-size: x-large;
+    color: white !important;
+}
+
+.body-card {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.card-login {
+    background: #171923 !important;
+    width: 40%;
+    margin: 4rem auto;
+    padding: 3rem 1rem;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+@media screen and (max-width: 767px){
+    .card-login {
+        width: 90%;
+    }
+}
