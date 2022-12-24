@@ -1,6 +1,6 @@
 CREATE  DATABASE  Db_user;
 
-CREATE TABLE user (
+CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     username VARCHAR(20) NOT NULL ,
     password VARCHAR(255) NOT NULL ,
@@ -8,6 +8,4 @@ CREATE TABLE user (
 ) ENGINE = InnoDB;
 
 
-SELECT  * FROM user;
-
-DELETE user FROM user WHERE username = 'febri';
+SELECT  * FROM users;

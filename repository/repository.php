@@ -9,6 +9,10 @@ interface Login {
     function register(User $user): User;
 
     function findByid(string $username): ?User;
+
+    function selectAll();
+
+    function deleteByid(int $id);
 }
 
 class LoginImpl implements Login {
@@ -21,7 +25,7 @@ class LoginImpl implements Login {
 
     public function register(User $user): User
     {
-        $statement = $this->connection->prepare("INSERT INTO user(username, password, confirm) VALUES(?,?,?)");
+        $statement = $this->connection->prepare("INSERT INTO users(username, password, confirm) VALUES(?,?,?)");
         $statement->execute([
             $user->username,
             $user->password,
@@ -32,7 +36,7 @@ class LoginImpl implements Login {
 
     public function findByid(string $username): ?User
     {
-        $statement = $this->connection->prepare("SELECT * FROM user WHERE username = ?");
+        $statement = $this->connection->prepare("SELECT * FROM users WHERE username = ?");
         $statement->execute([$username]);
 
         // melakukan close cursor
@@ -50,5 +54,18 @@ class LoginImpl implements Login {
         } finally {
             $statement->closeCursor();
         }
+    }
+
+    public function selectAll()
+    {
+        $statement = $this->connection->query("SELECT * FROM users");
+
+        return $statement;
+    }
+
+    public function deleteByid(int $id)
+    {
+        $statement = $this->connection->prepare("DELETE FROM users WHERE id = ?");
+        $statement->execute([$id]);
     }
 }

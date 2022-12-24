@@ -28,6 +28,10 @@ a {
     text-decoration: none !important;
 }
 
+.uppercase {
+    text-transform: capitalize;
+}
+
 @media screen and (max-width: 767px){
     .card-login {
         width: 90%;

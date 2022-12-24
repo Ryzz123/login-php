@@ -62,6 +62,10 @@ class userService
             $message = $this->exceptionMessage->message = "Username, Password Tidak Boleh Kosong";
             header("Location: ./register.php?message=$message");
             exit();
+        } elseif ($request->password != $request->confirm) {
+            $message = $this->exceptionMessage->message = "Konfirmasi password harus sama";
+            header("Location: ./register.php?message=$message");
+            exit();
         }
     }
 
@@ -92,6 +96,10 @@ class userService
         if ($request->username == null || $request->password == null || $request->confirm == null || trim($request->username) == "" || trim($request->password) == "" || trim($request->confirm) == "") {
             $message = $this->exceptionMessage->message = "Username, Password Tidak Boleh Kosong";
             header("Location: ./login.php?message=$message");
+            exit();
+        } elseif ($request->password != $request->confirm) {
+            $message = $this->exceptionMessage->message = "Konfirmasi password harus sama";
+            header("Location: ./register.php?message=$message");
             exit();
         }
     }

@@ -1,11 +1,22 @@
 <?php
-require_once __DIR__ . '/user/user.php';
-
 session_start();
 if ($_SESSION['login'] != 'login') {
-    header('Location: ./login.php');
+    header('Location: ./view/login.php');
     exit();
 }
+
+require_once __DIR__ . '/user/user.php';
+require_once __DIR__ . '/database/connection.php';
+require_once __DIR__ . '/repository/repository.php';
+
+use Repository\LoginImpl;
+
+$connection = getConnection();
+$repository = new LoginImpl($connection);
+
+$data = $repository->selectAll();
+
+$connection = null;
 ?>
 <!doctype html>
 <html lang="en">
@@ -20,13 +31,34 @@ if ($_SESSION['login'] != 'login') {
     <title>Home</title>
 </head>
 <body>
-
+<a href="./view/logout.php" class="btn bg-dark my-3 mx-3 btn-primary">LOG-OUT</a>
 <div class="container">
-    <div class="jumbotron text-center mt-5">
-        <h1 class="display-4 text-white">Hello, <?= $_GET['name'] ?? '' ?></h1>
-        <p class="lead text-white">Silahkan klik log-out dibawah, jika kamu ingin log-out!</p>
-        <a class="btn btn-primary bg-dark btn-lg text-white" href="./logout.php" role="button">LOG-OUT</a>
-    </div>
+    <div class="jumbotron text-center">
+        <div class="card bg-dark">
+            <table class="table text-white">
+                <thead>
+                <tr>
+                    <th scope="col">NO</th>
+                    <th scope="col">USERNAME</th>
+                    <th scope="col">AKSI</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php $id = 1; ?>
+                <?php foreach ($data as $datas) : ?>
+                    <tr class="mb-4">
+                        <th scope="row"><?= $id ?></th>
+                        <td class="uppercase"><?= $datas['username'] ?></td>
+                        <td>
+                            <a href="./view/delete.php?id=<?= $datas['id'] ?>" class="btn btn-primary bg-dark">HAPUS</a>
+                        </td>
+                    </tr>
+                <?php $id++; ?>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        </div>
 </div>
 
 <!-- link javascript bootsrap -->
